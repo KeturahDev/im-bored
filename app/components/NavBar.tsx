@@ -4,11 +4,13 @@ import React from 'react'
 const NavBar = () => {
   return (
     <div className='navbar bg-base-100 p-5 my-5'>
-      <div className='flex'>
-        <a className="btn btn-ghost normal-case text-xl">Im Bored" Hi Bored, Im Dad</a>
+      <div className='flex-1'>
+        <Link className="btn btn-ghost normal-case text-xl" href='/'>Hi Bored, Im Dad</Link>
       </div>
-      <Link className='btn' href='/doSomething'>Do something</Link>
-      <Link className='btn' href='/brainStorm'>BrainStorm</Link>
+      <div className='flex-none'>
+      <Link className='btn btn-primary' href='/do-something'>Do something</Link>
+      <Link className='btn btn-ghost' href='/brainstorm'>BrainStorm</Link>
+      </div>
     </div>
   )
 }

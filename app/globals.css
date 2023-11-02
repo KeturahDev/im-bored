@@ -6,3 +6,12 @@
 body {
   color: rgb(var(--foreground-rgb));
 }
+
+@layer base {
+  h1 {
+    @apply text-2xl;
+  }
+  h2 {
+    @apply text-xl;
+  }
+}
