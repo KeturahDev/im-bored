@@ -1,13 +1,24 @@
 'use client'
 import React, { useState } from 'react'
 
+type Type = 'charity'|  'cooking' | 'music' | 'diy' | 'education' | 'social' | 'busywork' | 'recreational' | 'relaxation';
+
+type Accessibility = 'Few to no challenges' | 'Minor challenges' | 'Major challenges';
+
+type Duration = 'minutes' | 'hours' | 'days' | 'weeks';
+
 interface Activity {
   activity: string;
+  type: Type;
+  participants: number;
+  price: number;
+  accessibility?: Accessibility;
+  duration?: Duration;
 }
 type Details = "solo" | "group"
 
 const ActivityGenerator = () => {
-  const [activity, setActivity] = useState<Activity>({activity: ""});
+  const [activity, setActivity] = useState<Activity | undefined>();
 
   const getActivity = async (details?: Details) => {
     let participants;
@@ -17,7 +28,7 @@ const ActivityGenerator = () => {
         break;
       case "solo":
         participants = "?participants=1";
-        break;
+        break;  
       default:
         participants = ""
     }
@@ -29,25 +40,33 @@ const ActivityGenerator = () => {
     }
   }
 
-  console.log(activity)
   return (
-    <div className='border-black mt-8 p-2 gap-4 flex flex-col items-center border-2 border-green-500 rounded-md'>
-      <div>{activity.activity}</div>      
-      <div className="collapse bg-base-200">
-        <input type="radio" name="my-accordion-1" checked={activity.activity === "" ? true : undefined}/> 
-        <div className="collapse-title text-xl font-medium">
-          Basic Options
+    <div className={"w-3/5 border-black mt-8 p-8 gap-4 flex flex-col items-center border-2 border-green-500 rounded-md"}>
+      {
+        activity ? 
+        <div className="card w-96 bg-base-100 shadow-xl">
+          <div className="card-body">
+            <h2 className="card-title h-14 min-h-full">{activity.activity}</h2>
+            <div className='grid grid-cols-2 gap-2 h-14 min-h-full'>
+              <div className=''>type: {activity.type}</div>
+              <div className=''>price: {activity.price}</div>
+              {activity.duration ? <div className=''>duration: {activity.duration}</div> : null}
+              {activity.accessibility ? <div className=''>accessibility: {activity.accessibility}</div> : null}
+            </div>
+            <div className="card-actions justify-end">
+              <button className="btn btn-primary">Save</button>
+            </div>
+          </div>
         </div>
-        <div className="collapse-content"> 
-        <div className='btn-group' >
+        : <p>well, do something then</p>
+      }
+      <div className="mt-8 gap-8 flex justify-center"> 
         <button onClick={() => getActivity()} className='btn btn-outline btn-primary'>Random</button>
-        <button onClick={() => getActivity("group")} className='btn btn-outline btn-primary'>Group</button>
-        <button onClick={() => getActivity("solo")} className='btn btn-outline btn-primary'>Solo</button>
-      </div>
-        </div>
-      </div>
+        <button onClick={() => getActivity("group")} className='btn btn-outline btn-primary'>Social</button>
+        <button onClick={() => getActivity("solo")} className='btn btn-outline btn-primary'>Reclusive</button>
+      </div>            
       <div className="collapse bg-base-200">
-        <input type="radio" name="my-accordion-1" /> 
+      <input type="checkbox" /> 
         <div className="collapse-title text-xl font-medium">
           Feeling Picky
         </div>
