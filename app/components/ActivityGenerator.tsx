@@ -1,25 +1,11 @@
 'use client'
 import React, { useState } from 'react'
+import { Activity, Details } from '../utils/models';
 
-type Type = 'charity'|  'cooking' | 'music' | 'diy' | 'education' | 'social' | 'busywork' | 'recreational' | 'relaxation';
-
-type Accessibility = 'Few to no challenges' | 'Minor challenges' | 'Major challenges';
-
-type Duration = 'minutes' | 'hours' | 'days' | 'weeks';
-
-interface Activity {
-  activity: string;
-  type: Type;
-  participants: number;
-  price: number;
-  accessibility?: Accessibility;
-  duration?: Duration;
-}
-type Details = "solo" | "group"
 
 const ActivityGenerator = () => {
   const [activity, setActivity] = useState<Activity | undefined>();
-
+  
   const getActivity = async (details?: Details) => {
     let participants;
     switch(details) {
@@ -40,6 +26,16 @@ const ActivityGenerator = () => {
     }
   }
 
+  const saveActivity = async () => {
+    if (!activity) return;
+
+    const queryString = `?activity=${activity.activity}&type=${activity.type}&participants=${activity.participants}&price=${activity.price}&accessibility=${activity.accessibility}&duration=${activity.duration}`
+
+    const response = await fetch(`/api/postActivity${queryString}`) 
+    const data = await response.json()
+    console.log(data);
+  }
+
   return (
     <div className={"w-3/5 border-black mt-8 p-8 gap-4 flex flex-col items-center border-2 border-green-500 rounded-md"}>
       {
@@ -54,7 +50,7 @@ const ActivityGenerator = () => {
               {activity.accessibility ? <div className=''>accessibility: {activity.accessibility}</div> : null}
             </div>
             <div className="card-actions justify-end">
-              <button className="btn btn-primary">Save</button>
+              <button className="btn btn-primary" onClick={saveActivity}>Save</button>
             </div>
           </div>
         </div>
