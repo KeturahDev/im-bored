@@ -31,7 +31,7 @@ const ActivityGenerator = () => {
 
     const queryString = `?activity=${activity.activity}&type=${activity.type}&participants=${activity.participants}&price=${activity.price}&accessibility=${activity.accessibility}&duration=${activity.duration}`
     
-    const response = await fetch(`/api/postActivity${queryString}`, {method: "POST", body: null}) 
+    const response = await fetch(`/api/activity${queryString}`, {method: "POST", body: null}) 
     const data = await response.json()
     console.log("data", data);
   }
