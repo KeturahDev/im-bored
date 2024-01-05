@@ -22,6 +22,10 @@ export default function RootLayout({
         <div className='p-5 my-5 mx-10'>
           {children}
         </div>
+        <footer className=" fixed bottom-0 left-0 right-0 h-12 flex justify-center items-center bg-gray-200">
+      © Copyright {new Date().getFullYear()} Bored App | Made by{' '}
+        <a href="https://github.com/KeturahDev"><span className="mx-1">Keturah Howard</span></a>
+    </footer>
       </body>
     </html>
   )
