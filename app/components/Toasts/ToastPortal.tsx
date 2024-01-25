@@ -27,7 +27,7 @@ const ToastPortal = React.forwardRef<ToastHandle, Props>(({}, ref) => {
 
   return loaded ? (
     ReactDOM.createPortal(
-      <div className='flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800'>
+      <div className='flex items-center w-full max-w-xs'>
         {toasts.map((t) => (
           <Toast
             key={t.id}
