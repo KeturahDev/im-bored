@@ -1,9 +1,10 @@
 'use client';
 import React, { useState } from 'react';
 import { Activity, Details } from '../utils/models';
-import ToastPortal from './ToastPortal';
+import ToastPortal, { ToastHandle } from './Toasts/ToastPortal';
 
 const ActivityGenerator = () => {
+  const toastRef = React.useRef<ToastHandle>(null);
   const [activity, setActivity] = useState<Activity | undefined>();
 
   const getActivity = async (details?: Details) => {
@@ -35,11 +36,16 @@ const ActivityGenerator = () => {
 
     try {
       const response = await fetch(`/api/activity${queryString}`, {
-        method: 'fail',
+        method: 'POST',
         body: null,
       });
       const data = await response.json();
-      console.log('data', data);
+      if (toastRef.current) {
+        toastRef.current.addMessage({
+          mode: 'success',
+          message: 'activity has been added',
+        });
+      }
     } catch (err) {
       console.log('THIS LOG THOUGH', err);
     }
@@ -102,7 +108,7 @@ const ActivityGenerator = () => {
           <p>👷‍♀️ Coming soon 🚧</p>
         </div>
       </div>
-      <ToastPortal />
+      <ToastPortal ref={toastRef} />
     </div>
   );
 };
